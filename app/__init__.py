@@ -11,7 +11,7 @@ from config import Config
 file_handler = FileHandler("errorlog.txt")
 file_handler.setLevel(WARNING)
 
-app = Flask(__name__, static_folder="./public", template_folder="./static")
+app = Flask(__name__)
 app.logger.addHandler(file_handler)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
