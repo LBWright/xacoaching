@@ -3,5 +3,4 @@ from flask import Blueprint
 bp = Blueprint("api", __name__)
 
 import app.api.coaches
-
-# we will register blueprints here
+import app.security.auth_api

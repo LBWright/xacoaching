@@ -1,39 +1,74 @@
-from random import randint
-from flask import jsonify, request
+"""Coach Resource routing and CRUD logic"""
+from flask import jsonify, request, abort
+from marshmallow import ValidationError
+from app.models.coach import Coach
+from app.schemas.coach_schema import CoachSchema
 from app.api import bp
 
-coaches = [{"name": "Taylor Wright", "id": "1"}]
+coaches_schema = CoachSchema(many=True)
+coach_schema = CoachSchema()
 
 
 @bp.route("/coaches", methods=["GET"])
 def get_many_coaches():
-    return jsonify(data=coaches)
+    """returns a list of coaches"""
+    coaches = Coach.query.all()
+    return coaches_schema.jsonify(coaches)
 
 
 @bp.route("/coaches", methods=["POST"])
 def create_coach():
-    data = request.get_json()
-    new_coach = {"name": data["name"], "id": randint(1, 100)}
+    """creates a coach resource and returns the created resource"""
+    try:
+        request_json = request.get_json()
+        new_coach = coach_schema.load(request_json)
+        # return jsonify(new_coach=new_coach)
+    except ValidationError as err:
+        abort(400, err)
 
-    coaches.append(new_coach)
+    try:
+        new_coach.save()
+        coach_json = coach_schema.dump(new_coach)
+        return jsonify(data=coach_json), 201
 
-    return jsonify(data=new_coach), 201
-
-
-@bp.route("/coaches/<id>")
-def get_single_coach(id):
-    coach = next(filter(lambda x: x["id"] == id, coaches), None)
-    if coach:
-        return jsonify(data=coach)
-
-    return jsonify(error="Resource not found"), 404
-
-
-@bp.route("/coaches/<id>", methods=["PUT"])
-def update_coach(id):
-    pass
+    except Exception as ex:
+        print("Error:", str(ex))
+        error = str(ex)
+        return abort(500, error)
 
 
-@bp.route("/coaches/<id>", methods=["DELETE"])
-def delete_coach(id):
-    pass
+@bp.route("/coaches/<int:coach_id>")
+def get_single_coach(coach_id):
+    """returns a single coach by selected id"""
+    coach = Coach.query.get(coach_id)
+    if not coach:
+        abort(404, "Coach not found")
+    return coach_schema.jsonify(coach)
+
+
+@bp.route("/coaches/<int:coach_id>", methods=["PUT"])
+def update_coach(coach_id):
+    """updates a coach. if coach not found, 404. Returns the updated resource"""
+    coach = Coach.query.get(coach_id)
+    if not coach:
+        abort(404, "Coach not found")
+    try:
+        new_coach = coach_schema.load(request.get_json())
+    except ValidationError as err:
+        abort(400, err.messages)
+
+    coach.save()
+
+    coach_json = coach_schema.dump(coach).data
+
+    return coach_schema.jsonify(new_coach)
+
+
+@bp.route("/coaches/<int:coach_id>", methods=["DELETE"])
+def delete_coach(coach_id):
+    """deletes a single coach. If coach not found, 404. Returns the deleted resource"""
+    coach = Coach.query.get(coach_id)
+    if not coach:
+        abort(404, "Coach not found")
+    coach.delete()
+    return coach_schema.jsonify(coach), 202
