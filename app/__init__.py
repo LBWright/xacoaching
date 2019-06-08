@@ -1,21 +1,33 @@
-from flask import Flask
+from flask import Flask, render_template
+from logging import FileHandler, WARNING
 from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 
 
 from config import Config
 
-app = Flask(__name__)
+file_handler = FileHandler("errorlog.txt")
+file_handler.setLevel(WARNING)
+
+app = Flask(__name__, static_folder="./public", template_folder="./static")
+app.logger.addHandler(file_handler)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
 
 
 @app.route("/")
-def hello_world():
-    return "hello, world!"
+def render_client():
+    return render_template("index.html", token="Reactipy")
+
+
+@app.route("/throw")
+def force_error():
+    return 1 / 0
 
 
 @app.before_first_request

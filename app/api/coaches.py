@@ -4,6 +4,7 @@ from marshmallow import ValidationError
 from app.models.coach import Coach
 from app.schemas.coach_schema import CoachSchema
 from app.api import bp
+from app import db
 
 coaches_schema = CoachSchema(many=True)
 coach_schema = CoachSchema()
@@ -22,19 +23,12 @@ def create_coach():
     try:
         request_json = request.get_json()
         new_coach = coach_schema.load(request_json)
-        # return jsonify(new_coach=new_coach)
     except ValidationError as err:
         abort(400, err)
 
-    try:
-        new_coach.save()
-        coach_json = coach_schema.dump(new_coach)
-        return jsonify(data=coach_json), 201
-
-    except Exception as ex:
-        print("Error:", str(ex))
-        error = str(ex)
-        return abort(500, error)
+    new_coach.save()
+    coach_json = coach_schema.dump(new_coach)
+    return jsonify(data=coach_json), 201
 
 
 @bp.route("/coaches/<int:coach_id>")
@@ -52,14 +46,13 @@ def update_coach(coach_id):
     coach = Coach.query.get(coach_id)
     if not coach:
         abort(404, "Coach not found")
+
     try:
-        new_coach = coach_schema.load(request.get_json())
+        new_coach = coach_schema.load(request.get_json(), session=db.session)
     except ValidationError as err:
         abort(400, err.messages)
 
-    coach.save()
-
-    coach_json = coach_schema.dump(coach).data
+    coach.update(new_coach)
 
     return coach_schema.jsonify(new_coach)
 
