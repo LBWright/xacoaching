@@ -1,0 +1,2 @@
+FLASK_APP=xacoaching
+FLASK_ENV=development

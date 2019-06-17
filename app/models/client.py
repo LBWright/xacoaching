@@ -1,21 +1,19 @@
-"""Coach DB Model Schema"""
+"""Client Model Declaration"""
 from app import db
 
 
-class Coach(db.Model):
-    """Coach DB Model"""
+class Client(db.Model):
+    """Client DB Model"""
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(80), nullable=False, unique=True)
+    email = db.Column(db.String(80))
     phone = db.Column(db.String(15))
     campus = db.Column(db.String(80))
-    clients = db.relationship(
-        "Client", backref="coach", lazy=True, cascade="save-update"
-    )
+    coach_id = db.Column(db.Integer, db.ForeignKey("coach.id"))
 
     def __repr__(self):
-        return f"<Coach {self.name}>"
+        return f"<Client {self.name}>"
 
     def save(self):
         db.session.add(self)
