@@ -5,9 +5,9 @@ from app import db
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
-    created_at db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey("coach.id"), nullable=False)
-    comments = db.relationship("Comment", backref="post", lazy="join")
+    comments = db.relationship("Comment", backref="post", lazy="joined")
 
     def save(self):
         db.session.add(self)
