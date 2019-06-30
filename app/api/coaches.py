@@ -27,8 +27,7 @@ def create_coach():
         abort(400, err)
 
     new_coach.save()
-    coach_json = coach_schema.dump(new_coach)
-    return jsonify(data=coach_json), 201
+    return coach_schema.jsonify(new_coach), 201
 
 
 @bp.route("/coaches/<int:coach_id>")

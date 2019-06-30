@@ -12,14 +12,14 @@ client_schema = ClientSchema()
 @bp.route("/clients", methods=["GET"])
 def get_many_clients():
     clients = Client.query.all()
-    return jsonify(data=clients_schema.dump(clients))
+    return clients_schema.jsonify(clients)
 
 
 @bp.route("/clients", methods=["POST"])
 def create_client():
     client = client_schema.load(request.get_json())
     client.save()
-    return jsonify(data=client_schema.dump(client))
+    return client_schema.jsonify(client)
 
 
 @bp.route("/clients/<int:client_id>", methods=["GET"])
@@ -29,7 +29,7 @@ def get_single_client(client_id):
     if not client:
         return abort(404, "Client not found")
 
-    return jsonify(data=client_schema.dump(client))
+    return client_schema.jsonify(client)
 
 
 @bp.route("/clients/<int:client_id>", methods=["PUT"])
@@ -41,7 +41,7 @@ def update_client(client_id):
     new_client = client_schema.load(request.get_json())
     client.update(new_client)
 
-    return jsonify(data=client_schema.dump(new_client))
+    return client_schema.jsonify(new_client)
 
 
 @bp.route("/clients/<int:client_id>", methods=["DELETE"])
@@ -52,4 +52,4 @@ def delete_client(client_id):
 
     client.delete()
 
-    return jsonify(data=client_schema.dump(client)), 202
+    return client_schema.jsonify(client), 202

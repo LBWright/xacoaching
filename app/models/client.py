@@ -11,6 +11,7 @@ class Client(db.Model):
     phone = db.Column(db.String(15))
     campus = db.Column(db.String(80))
     coach_id = db.Column(db.Integer, db.ForeignKey("coach.id"))
+    sessions = db.relationship("Session", backref="client", lazy=True)
 
     def __repr__(self):
         return f"<Client {self.name}>"
@@ -23,7 +24,7 @@ class Client(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def update(self, new_coach):
-        new_coach.id = self.id
-        db.session.merge(new_coach)
+    def update(self, updated):
+        updated.id = self.id
+        db.session.merge(updated)
         db.session.commit()

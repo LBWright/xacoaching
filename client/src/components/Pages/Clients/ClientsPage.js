@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import useData from '../../hooks/useData'
 import { Loading, Error } from '../../Layout'
 
-const CoachesPage = props => {
-    const [coaches, loading, error] = useData({ resource: 'coaches' })
+export default function ClientsPage() {
+    const [clients, loading, error] = useData({ resource: 'clients' })
 
     if (loading) return <Loading />
 
@@ -12,7 +12,7 @@ const CoachesPage = props => {
 
     return (
         <div>
-            <h1 className="m-5">Coaches</h1>
+            <h1 className="m-5">Client</h1>
             <div className="mx-5">
                 <table className="table">
                     <thead>
@@ -25,16 +25,16 @@ const CoachesPage = props => {
                         </tr>
                     </thead>
                     <tbody>
-                        {coaches.map(coach => (
-                            <tr key={coach.id}>
-                                <td>{coach.name}</td>
-                                <td>{coach.email}</td>
-                                <td>{coach.phone}</td>
-                                <td>{coach.campus}</td>
+                        {clients.map(client => (
+                            <tr key={client.id}>
+                                <td>{client.name}</td>
+                                <td>{client.email}</td>
+                                <td>{client.phone}</td>
+                                <td>{client.campus}</td>
                                 <td>
                                     <Link
                                         className="btn btn-success btn-sm mx-1"
-                                        to={`/coaches/${coach.id}`}
+                                        to={`/clients/${client.id}`}
                                     >
                                         View
                                     </Link>
@@ -53,5 +53,3 @@ const CoachesPage = props => {
         </div>
     )
 }
-
-export default CoachesPage

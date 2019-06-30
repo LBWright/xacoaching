@@ -22,7 +22,7 @@ jwt = JWTManager(app)
 
 @app.route("/")
 def render_client():
-    return render_template("index.html", token="Reactipy")
+    return render_template("index.html")
 
 
 @app.route("/throw")

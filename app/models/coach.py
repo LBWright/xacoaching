@@ -25,7 +25,7 @@ class Coach(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def update(self, new_coach):
-        new_coach.id = self.id
-        db.session.merge(new_coach)
+    def update(self, updated):
+        updated.id = self.id
+        db.session.merge(updated)
         db.session.commit()

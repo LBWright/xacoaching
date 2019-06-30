@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const useMany = resource => {
+// Make this more reusable by adding resource id parameter
+// eventually make add query string object or array param
+const useData = ({ resource, id }) => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
+    let url = `/api/${resource}`
+
+    if (id) {
+        url += `/${id}`
+    }
 
     useEffect(() => {
         const executeQuery = async () => {
             setLoading(true)
             try {
-                const response = await axios.get(`/api/${resource}`)
+                const response = await axios.get(url)
                 setLoading(false)
                 setData(response.data)
             } catch (err) {
@@ -20,8 +27,8 @@ const useMany = resource => {
             }
         }
         executeQuery()
-    }, [resource])
+    }, [url])
     return [data, loading, error]
 }
 
-export default useMany
+export default useData
