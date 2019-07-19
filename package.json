@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js"
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "NODE_ENV=test jest --watchAll --verbose"
   },
   "repository": {
     "type": "git",
@@ -17,17 +18,33 @@
   },
   "homepage": "https://github.com/LBWright/xacoaching#readme",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.19.0",
+    "config": "^3.2.1",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "helmet": "^3.19.0",
-    "mongoose": "^5.6.5"
+    "mongoose": "^5.6.5",
+    "morgan": "^1.9.1",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/",
+    "testEnvironment": "node",
+    "setupTestFrameworkScriptFile": "<rootDir>/test-db-setup.js",
+    "testPathIgnorePatterns": [
+      "dist/"
+    ],
+    "restoreMocks": true
   }
 }

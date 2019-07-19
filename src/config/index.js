@@ -17,14 +17,14 @@ let envConfig = {};
 switch (env) {
   case "dev":
   case "development":
-    envConfig = require("./dev").config;
+    envConfig = require("./development").config;
     break;
   case "test":
   case "testing":
     envConfig = require("./testing").config;
     break;
   default:
-    envConfig = require("./dev").config;
+    envConfig = require("./development").config;
 }
 
 export default { ...baseConfig, ...envConfig };
