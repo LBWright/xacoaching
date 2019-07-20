@@ -8,8 +8,8 @@ const HOST = process.env.HOST
 const DB_URL = process.env.DB_URL
 const DB_NAME = process.env.DB_NAME
 
-app.get('/', (req, res) => {
-  return res.json({ message: 'Welcome to the User Routes' })
+app.get('/ping', (req, res) => {
+  return res.json({ message: 'pong!' })
 })
 
 const start = async () => {
