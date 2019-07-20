@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --forceExit --detectOpenHandles  --silent",
+    "test": "node --inspect-brk node_modules/.bin/jest --forceExit --detectOpenHandles  --silent",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
