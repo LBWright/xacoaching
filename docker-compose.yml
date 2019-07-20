@@ -1,6 +1,13 @@
 version: '3.7'
 
 services:
+  mongo:
+    image: mongo
+    volumes:
+      - data:/data/db
+    ports:
+      - 27017:27017
+
   users:
     build:
       context: ./services/users
@@ -20,13 +27,6 @@ services:
       - HOST=0.0.0.0
       - DB_URL=mongo:27017
       - DB_NAME=xacoaching-dev
-
-  mongo:
-    image: mongo
-    volumes:
-      - data:/data/db
-    ports:
-      - 27017:27017
 
 volumes:
   data:
