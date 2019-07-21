@@ -22,6 +22,10 @@
   "jest": {
     "verbose": true,
     "testEnvironment": "node",
-    "restoreMocks": true
+    "restoreMocks": true,
+    "testMatch": [
+      "**/tests/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ]
   }
 }

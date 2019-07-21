@@ -1,4 +1,4 @@
-language: node_js
+language: minimal
 
 sudo: required
 
@@ -18,7 +18,7 @@ before_script:
   - docker-compose up -d --build
 
 script:
-  - docker container exec xacoaching_users_1 npm test
+  - docker-compose exec users npm test
 
 after_script:
   - docker-compose down
