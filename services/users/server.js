@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const router = require('./router')
 
 const app = express()
 
@@ -10,6 +11,15 @@ const DB_NAME = process.env.DB_NAME
 
 app.get('/ping', (req, res) => {
   return res.json({ message: 'pong!' })
+})
+
+router(app)
+
+app.use(function(err, req, res, next) {
+  if (err) {
+    return res.json(err.message)
+  }
+  return res.json({ message: 'Uh oh. Not sure how this happened' })
 })
 
 const start = async () => {
