@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const { Schema } = mongoose
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     required: [true, 'Username is a required field'],
@@ -86,6 +86,6 @@ userSchema.methods.checkPassword = function(password) {
   })
 }
 
-const User = mongoose.model('User', UserSchema)
+const User = mongoose.model('User', userSchema)
 
 module.exports = User
