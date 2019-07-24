@@ -1,13 +1,12 @@
-const express = require('express')
-const router = express.Router()
-
+const { Router } = require('express')
 const {
-  getOne,
   getMany,
-  createOne,
+  getOne,
   updateOne,
-  removeOne
-} = require('./client.controller')
+  removeOne,
+  createOne
+} = require('./post.controller')
+const router = Router()
 
 router
   .route('/')

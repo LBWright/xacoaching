@@ -31,14 +31,14 @@ async function seedUsers(rounds = 10) {
       campus: faker.lorem.word()
     }
     user = new User(userObj)
-    user
-      .save()
-      .then(newUser => {
-        console.log('---User Created---')
-        console.log(newUser)
-        seedClients(5, newUser._id)
-      })
-      .catch(e => console.log(e))
+    try {
+      const newUser = await user.save()
+      console.log('---User Created---')
+      console.log(newUser)
+      seedClients(5, newUser._id)
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 

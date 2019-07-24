@@ -6,13 +6,18 @@ const {
   getMany,
   createOne,
   updateOne,
-  deleteOne
+  removeOne
 } = require('./user.controller')
 
-router.get('/', getMany)
-router.post('/', createOne)
-router.get('/:id', getOne)
-router.put('/:id', updateOne)
-router.delete('/:id', deleteOne)
+router
+  .route('/')
+  .get(getMany)
+  .post(createOne)
+
+router
+  .route('/:id')
+  .get(getOne)
+  .put(updateOne)
+  .delete(removeOne)
 
 module.exports = router
