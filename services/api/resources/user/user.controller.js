@@ -1,4 +1,4 @@
-const User = require('../models/user')
+const User = require('./user.model')
 
 async function getMany(req, res, next) {
   try {

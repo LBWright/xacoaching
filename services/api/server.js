@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const router = require('./router')
+const users = require('./resources/user/user.router')
 
 const app = express()
 
@@ -13,7 +13,7 @@ app.get('/ping', (req, res) => {
   return res.json({ message: 'pong!' })
 })
 
-router(app)
+app.use('/api/users', users)
 
 app.use(function(err, req, res, next) {
   if (err) {

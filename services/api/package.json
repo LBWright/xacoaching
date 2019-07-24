@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "test": "jest --forceExit --detectOpenHandles  --silent",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "seed": "node ./util/seed"
   },
   "keywords": [
     "Help"
@@ -21,6 +23,8 @@
     "supertest": "^4.0.2"
   },
   "devDependencies": {
+    "eslint-plugin-node": "^9.1.0",
+    "faker": "^4.1.0",
     "nodemon": "^1.19.1"
   },
   "jest": {
