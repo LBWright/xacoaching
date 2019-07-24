@@ -12,8 +12,8 @@ async function getMany(req, res, next) {
 async function createOne(req, res, next) {
   try {
     const user = new User(req.body)
-    await user.save()
-    return res.json(201, { user })
+    const newUser = await user.save().populate()
+    return res.json(201, { user: newUser })
   } catch (e) {
     next(e)
   }

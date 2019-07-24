@@ -15,24 +15,28 @@ const clientSchema = new Schema({
   },
   sessions: [
     {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Session'
     }
   ],
   notes: [
     {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Note'
     }
   ],
   appointments: [
     {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Appointment'
     }
   ],
   coach: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Coach'
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
+
+const Client = model('Client', clientSchema)
+
+module.exports = Client
