@@ -23,7 +23,6 @@ async function connect() {
 }
 
 async function seedUsers(rounds = 10) {
-  const userPromise = []
   for (let i = 0; i < rounds; i++) {
     const userObj = {
       username: faker.name.findName(),
@@ -44,7 +43,6 @@ async function seedUsers(rounds = 10) {
 }
 
 async function seedClients(rounds = 5, userId) {
-  const clientPromise = []
   for (let i = 0; i < rounds; i++) {
     const clientObj = {
       name: faker.name.findName(),
@@ -53,11 +51,11 @@ async function seedClients(rounds = 5, userId) {
       coach: userId
     }
     client = new Client(clientObj)
-    clientPromise.push(client.save())
+    client.save().then(newClient => {
+      console.log(`----Client Created for Coach ${userId}----`)
+      console.log(newClient)
+    })
   }
-  const created = await Promise.all(clientPromise)
-  console.log(`----Clients Created for Coach ${userId}----`)
-  console.log(created)
 }
 
 connect()
