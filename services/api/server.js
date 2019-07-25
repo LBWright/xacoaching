@@ -9,11 +9,11 @@ const HOST = process.env.HOST
 const DB_URL = process.env.DB_URL
 const DB_NAME = process.env.DB_NAME
 
+app.use(router)
+
 app.get('/ping', (req, res) => {
   return res.json({ message: 'pong!' })
 })
-
-app.use(router)
 
 app.use(function(err, req, res, next) {
   if (err) {
