@@ -16,14 +16,18 @@
   "author": "Logan Wright",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.0",
     "bcrypt": "3.0.6",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "jest": "^24.8.0",
+    "helmet": "^3.20.0",
     "mongoose": "^5.6.5",
-    "axios": "^0.19.0"
+    "morgan": "^1.9.1"
   },
   "devDependencies": {
     "eslint-plugin-node": "^9.1.0",
+    "jest": "^24.8.0",
     "faker": "^4.1.0",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2"
